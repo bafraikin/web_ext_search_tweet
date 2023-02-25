@@ -1,0 +1,39 @@
+
+{
+
+  "manifest_version": 2,
+  "name": "Search Twitter",
+  "version": "1.0",
+
+  "description": "",
+  "homepage_url": "https://github.com///",
+  "icons": {
+    "48": "icons/beasts-48.png"
+  },
+
+  "permissions": [
+    "activeTab"
+  ],
+
+
+  "content_scripts": [
+    {
+      "matches": ["*://twitter.com/*"],
+      "js": ["search.js"]
+    }
+  ],
+
+
+  "browser_action": {
+    "default_icon": "icons/beasts-32.png",
+    "default_title": "Search twitter",
+    "default_popup": "popup/menu.html"
+  },
+
+  "web_accessible_resources": [
+    "beasts/frog.jpg",
+    "beasts/turtle.jpg",
+    "beasts/snake.jpg"
+  ]
+}
+
