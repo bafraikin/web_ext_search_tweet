@@ -31,5 +31,11 @@ function search(to_search)
 	}
 }
 
+function begin_search() {
+	
+	console.log("cocou");
+	alert('coucou');
+}
 
+	console.log("coucou")
 

@@ -3,10 +3,14 @@
  * On utilise CSS pour masquer tout ce qui se trouve sur la
  * page sauf les éléments avec la classe "beastify-image".
  */
+
+/*
 const hidePage = `body > :not(.beastify-image) {
                     display: none;
                   }`;
 
+*/
+console.log("here");
 /**
  * On écoute les clics sur les boutons et on envoie
  * un message approprié au script de contenu dans la page
@@ -98,7 +102,8 @@ function reportExecuteScriptError(error) {
  * and add a click handler.
  * If we couldn't inject the script, handle the error.
  */
+/*
 browser.tabs.executeScript({file: "/content_scripts/beastify.js"})
 .then(listenForClicks)
 .catch(reportExecuteScriptError);
-
+*/
