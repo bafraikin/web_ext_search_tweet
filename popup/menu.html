@@ -11,16 +11,17 @@
 		<div id="popup-content">
 			<div>
 				<label for="activated">activated</label>
-				<input placeholder="what to search" name="activated" type=checkbox></input>	
+				<input placeholder="what to search" name="activated" onclick="coucou" type=checkbox></input>	
 			</div>
 			<label for="search_input">What to filter</label>
-			<input type="text" placeholder="what to search" name="search_input" onchange="begin_search" value=""></input>	
+			<input type="search" placeholder="what to search" name="search_input" value=""></input>	
 
 		</div>
 		<div id="error-content" class="hidden">
 			<p>Cette extension ne fonctionne que sur twitter</p>
 			<p>Veuillez essayer une autre page.</p>
 		</div>
+		<script src="popup.js"></script>
 	</body>
 
 </html>

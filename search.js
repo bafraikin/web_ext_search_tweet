@@ -1,41 +1,60 @@
 
+(function () {
 
+	if (window.search_twitter_is_running_in_this_tab)
+		return;
+	else
+		window.search_twitter_is_running_in_this_tab = true;
 
-function remove_this_tweet(tweet)
-{
-	tweet.parentNode.parentNode.parentNode.remove();
-}
-
-function search(to_search) 
-{
-	to_search = to_search.split(" ").map(word => `(${word})`).join("|");
-	let regex = new RegExp(to_search, "i");
-	let tweets = Array.from(document.querySelectorAll("article"));
-	let index = -1;
-	let tweet;
-	while(tweet = tweets[++index])
+	function remove_this_tweet(tweet)
 	{
-		if (!regex.test(tweet.textContent))
+		tweet.parentNode.parentNode.parentNode.remove();
+	}
+
+	function search(to_search) 
+	{
+		to_search = to_search.split(" ").map(word => `(${word})`).join("|");
+		let regex = new RegExp(to_search, "i");
+		let tweets = Array.from(document.querySelectorAll("article"));
+		let index = -1;
+		let tweet;
+		while(tweet = tweets[++index])
 		{
-			let is_this_quote_tweet = tweet.querySelectorAll('[data-testid="tweetText"]');
-			if (is_this_quote_tweet.length > 1)
+			if (!regex.test(tweet.textContent))
 			{
-				if (!regex.test(is_this_quote_tweet[1].textContent))
+				let is_this_quote_tweet = tweet.querySelectorAll('[data-testid="tweetText"]');
+				if (is_this_quote_tweet.length > 1)
+				{
+					if (!regex.test(is_this_quote_tweet[1].textContent))
+						remove_this_tweet(tweet)
+				}
+				else
+				{
 					remove_this_tweet(tweet)
-			}
-			else
-			{
-				remove_this_tweet(tweet)
+				}
 			}
 		}
 	}
-}
+	function begin_search() {
 
-function begin_search() {
-	
-	console.log("cocou");
-	alert('coucou');
-}
+		console.log("begin_search");
+	}
 
-	console.log("coucou")
+	function reset() {
 
+	}
+
+	browser.runtime.onMessage.addListener((message) => {
+		console.log("messaged");
+		if (message.command == "search") {
+			console.log(message.input_search);
+		} else if (message.command == "reset") {
+			reset();
+		}
+	});
+
+
+	console.log("coucou");
+
+
+})();
