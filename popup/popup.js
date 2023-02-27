@@ -114,15 +114,14 @@ browser.tabs.executeScript({file: "/content_scripts/beastify.js"})
 */
 
 document.addEventListener("click", (e) => {
-	tabs.forEach((a) => {
-		browser.tabs.sendMessage(a.id, {
+	   browser.tabs.query({active: true, currentWindow: true})
+        .then((tab) => {
+		browser.tabs.sendMessage(tab[0].id, {
 			command: "search",
 			input_search: "aller"
 		});
+
 	})
-		browser.tabs.sendMessage(tabs[0].id, {
-			command: "search",
-			input_search :"message"
-		});
+
 	}
 )

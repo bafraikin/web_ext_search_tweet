@@ -19,7 +19,7 @@
       "js": ["search.js"]
     }
   ],
-   "permissions": ["activeTab", "tabs"],
+   "permissions": ["activeTab"],
 
 
   "browser_action": {
