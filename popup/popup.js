@@ -91,9 +91,6 @@ function listenForClicks() {
  * utilisateur normale.
  */
 
-function coucou() {
-	console.log("ça marche");
-}
 
 
 function reportExecuteScriptError(error) {
@@ -113,15 +110,14 @@ browser.tabs.executeScript({file: "/content_scripts/beastify.js"})
 .catch(reportExecuteScriptError);
 */
 
+
 document.addEventListener("click", (e) => {
-	   browser.tabs.query({active: true, currentWindow: true})
-        .then((tab) => {
-		browser.tabs.sendMessage(tab[0].id, {
-			command: "search",
-			input_search: "aller"
-		});
+	if (e.target.name == "search_button")
+		browser.tabs.query({active: true, currentWindow: true}).then((tab) => {
+			browser.tabs.sendMessage(tab[0].id, {
+				command: "search",
+				input_search: document.querySelector("input[name=search_input]").value
+			});
 
-	})
-
-	}
-)
+		})
+})

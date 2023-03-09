@@ -45,16 +45,16 @@
 	}
 
 	browser.runtime.onMessage.addListener((message) => {
-		console.log("messaged");
+		console.log(window.search_input)
 		if (message.command == "search") {
-			console.log(message.input_search);
+			{
+				window.search_input = message.input_search;
+				window.addEventListener("scroll", () => console.log("coucou"))
+				search(message.input_search);
+			}
 		} else if (message.command == "reset") {
 			reset();
 		}
 	});
-
-
-	console.log("coucou");
-
 
 })();
