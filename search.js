@@ -35,9 +35,21 @@
 			}
 		}
 	}
-	function begin_search() {
+	function begin_search(text) {
 
-		console.log("begin_search");
+		open_real = XMLHttpRequest.prototype.open;
+		good_request_pattern = new RegExp(/Likes/);
+		XMLHttpRequest.prototype.open = function() {
+			if (arguments[1] && good_request_pattern.test(arguments[1]))
+			{
+				const parsed_url = new URL(arguments[1]);
+				debugger;
+				console.log(parsed_url.searchParams);
+				parsed_url.searchParams.entries()  => .next() => value  => ["name", JSON.parse("value")]
+				console.log(parsed_url);
+			}
+			open_real.apply(this, arguments);
+		}
 	}
 
 	function reset() {
