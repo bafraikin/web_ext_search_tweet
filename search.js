@@ -43,10 +43,10 @@
 			if (arguments[1] && good_request_pattern.test(arguments[1]))
 			{
 				const parsed_url = new URL(arguments[1]);
-				debugger;
-				console.log(parsed_url.searchParams);
-				parsed_url.searchParams.entries()  => .next() => value  => ["name", JSON.parse("value")]
-				console.log(parsed_url);
+				let variables = JSON.parse(parsed_url.searchParams.get("variables"));
+				variables.count = 50;
+				parsed_url.searchParams.set("variables", JSON.stringify(variables));
+				arguments[1] = parsed_url.href;
 			}
 			open_real.apply(this, arguments);
 		}
