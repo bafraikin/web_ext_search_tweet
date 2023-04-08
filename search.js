@@ -1,7 +1,7 @@
 
 (function () {
 
-	if (window.search_twitter_is_running_in_this_tab)
+	if (window.search_twitter_is_running_in_this_tab === true)
 		return;
 	else
 		window.search_twitter_is_running_in_this_tab = true;
@@ -35,10 +35,16 @@
 			}
 		}
 	}
-	function begin_search(text) {
+
+	function begin_search() {
+		//		https://stackoverflow.com/questions/61021084/webextension-how-to-transparently-modify-xmlhttprequests
+		if (window.request_augmented === true)
+			return;
+		else
+			window.request_augmented = true;
 
 		open_real = XMLHttpRequest.prototype.open;
-		good_request_pattern = new RegExp(/Likes/);
+		good_request_pattern = new RegExp(/Likes/i);
 		XMLHttpRequest.prototype.open = function() {
 			if (arguments[1] && good_request_pattern.test(arguments[1]))
 			{
@@ -50,18 +56,35 @@
 			}
 			open_real.apply(this, arguments);
 		}
+		//https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Sharing_objects_with_page_scripts
+		//		window.wrappedJSObject.XMLHttpRequest = cloneInto(XMLHttpRequest, window, {cloneFunctions: true});
 	}
 
 	function reset() {
 
 	}
 
+	function injectJS(file) {
+
+		let D = document;
+		let s = D.createElement('script');
+
+		s.type = "text/javascript";
+		s.src = browser.runtime.getURL(file);
+		s.onload = function() {
+			s.parentNode.removeChild(s);
+		};
+
+		(D.head || D.documentElement).appendChild(s);
+	}
+
+	exportFunction(begin_search, window, { defineAs: "begin_search" });
+				injectJS("inject.js");
 	browser.runtime.onMessage.addListener((message) => {
-		console.log(window.search_input)
 		if (message.command == "search") {
 			{
 				window.search_input = message.input_search;
-				window.addEventListener("scroll", () => console.log("coucou"))
+				//			window.addEventListener("scroll", () => console.log())
 				search(message.input_search);
 			}
 		} else if (message.command == "reset") {
